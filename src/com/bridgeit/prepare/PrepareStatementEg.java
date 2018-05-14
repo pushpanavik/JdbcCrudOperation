@@ -8,16 +8,19 @@ import java.util.Scanner;
 
 import com.bridgeit.statement.JdbcConnection;
 
+
+
 public class PrepareStatementEg {
 	static PreparedStatement ps;
 	static Connection con;
 	static Scanner scanner = new Scanner(System.in);
 	static int i;
-
+	
 	public static void main(String args[]) throws SQLException, ClassNotFoundException {
 	
 		PrepareStatementEg ep = new PrepareStatementEg();
-
+		
+		
 		System.out.println("1.Insert");
 		System.out.println("2.Update");
 		System.out.println("3.Delete");
