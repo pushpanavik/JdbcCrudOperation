@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.bridgeit.statement.JdbcConnection;
+import com.mysql.jdbc.DatabaseMetaData;
 
 
 
@@ -50,16 +51,25 @@ public class PrepareStatementEg {
 
 	}
 
+	@SuppressWarnings("resource")
 	private void display() throws SQLException, ClassNotFoundException {
 
 		con=JdbcConnection.getConnection();
 		ps = con.prepareStatement("select * from employee");
+		DatabaseMetaData dbmd=(DatabaseMetaData) con.getMetaData();
+		System.out.println(dbmd);
 		
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
+		ResultSet rs,rs1;
+	
+		 rs = ps.executeQuery();
+		 rs1=dbmd.getTables(null, null, null, new String[] {"table"});
+		 System.out.println(rs1);
+		 
+			while (rs.next()) {
 			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3));
+			
 		}
-
+		rs=dbmd.getTables(null, null, null, new String[] {"table"});
 		con.close();
 	}
 

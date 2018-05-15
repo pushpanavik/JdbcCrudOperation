@@ -1,4 +1,10 @@
 package com.bridgeit.callable;
+/****************************************************************************************
+ @Purpose: To demonstrate CallableStatement using Stored Procedures.
+ @author: Pushpa Navik
+ @version : 1.0
+ @since: 12-05-2018
+ ****************************************************************************************/
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -36,41 +42,37 @@ public class CallableStmtE {
 				ep.delete();
 				break;
 			case 4:
-				 ep.display();
-				 break;
+				ep.display();
+				break;
 			}
 			System.out.println("Enter your choice");
 			choice = scanner.nextInt();
 		}
 
-		
 	}
 
-	 @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private void display() throws SQLException, ClassNotFoundException {
-	 con=JdbcConnection.getConnection();
-	 CallableStatement stmt=con.prepareCall("{call displayRecord()}");
-	 ResultSet rs = stmt.executeQuery();
-	 while (rs.next()) {
-	 System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " +
-	 rs.getInt(3));
-	 }
-	
-	 
-	
-	 }
+		con = JdbcConnection.getConnection();
+		CallableStatement stmt = con.prepareCall("{call displayRecord()}");
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3));
+		}
+
+	}
+
 	private void delete() throws SQLException, ClassNotFoundException {
-		con=JdbcConnection.getConnection();
-		CallableStatement stmt= con.prepareCall("{call deleteRecords(?)}");
-		
+		con = JdbcConnection.getConnection();
+		CallableStatement stmt = con.prepareCall("{call deleteRecords(?)}");
+
 		System.out.println("Enter the employee ID");
 		int empID = scanner.nextInt();
 		stmt.setInt(1, empID);
 		i = stmt.executeUpdate();
 
-		
 		System.out.println(i + "records deleted");
-		
+
 	}
 
 	private void update() throws SQLException, ClassNotFoundException {
@@ -120,7 +122,7 @@ public class CallableStmtE {
 		stmt.setInt(1, empID);
 		stmt.setInt(3, empSalary);
 		i = stmt.executeUpdate();
-		
+
 		System.out.println(i + "records inserted");
 	}
 
@@ -135,17 +137,13 @@ public class CallableStmtE {
 		CallableStatement stmt = con.prepareCall("{call updateEmpId(?, ?)}");
 		stmt.setInt(1, oldId);
 		stmt.setString(2, newId);
-		//System.out.println(stmt);
-		int i=stmt.executeUpdate();
-		if(i > 0)
-		{
-		System.out.println( i+ "employee id updated");
-		}
-		else
-		{
+		// System.out.println(stmt);
+		int i = stmt.executeUpdate();
+		if (i > 0) {
+			System.out.println(i + "employee id updated");
+		} else {
 			System.out.println("failed");
 		}
-		
 
 	}
 
@@ -160,17 +158,13 @@ public class CallableStmtE {
 		CallableStatement stmt = con.prepareCall("{call updateName(?, ?)}");
 		stmt.setInt(1, oldId);
 		stmt.setString(2, name);
-		//System.out.println(stmt);
-		int i=stmt.executeUpdate();
-		if(i > 0)
-		{
-		System.out.println( i+ "employee id updated");
-		}
-		else
-		{
+		// System.out.println(stmt);
+		int i = stmt.executeUpdate();
+		if (i > 0) {
+			System.out.println(i + "employee id updated");
+		} else {
 			System.out.println("failed");
 		}
-		
 
 	}
 
@@ -181,20 +175,17 @@ public class CallableStmtE {
 		scanner.nextLine();
 		System.out.println("Enter the employee salary to update  ");
 		int sal = scanner.nextInt();
-		
+
 		CallableStatement stmt = con.prepareCall("{call updateSalary(?,?)}");
 		stmt.setInt(2, oldId);
-		stmt.setInt(1,sal);
-		int i=stmt.executeUpdate();
-		if(i > 0)
-		{
-		System.out.println( i+ "employee id updated");
-		}
-		else
-		{
+		stmt.setInt(1, sal);
+		int i = stmt.executeUpdate();
+		if (i > 0) {
+			System.out.println(i + "employee id updated");
+		} else {
 			System.out.println("failed");
 		}
 		con.close();
 	}
-	
+
 }
